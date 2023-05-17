@@ -849,6 +849,15 @@ fn parse_escape<'de, R: Read<'de>>(
     validate: bool,
     scratch: &mut Vec<u8>,
 ) -> Result<()> {
+
+    // blaze:
+    // invalid escape case: decode the backslash char as b'\\'
+    let peek_ch = tri!(peek_or_eof(read));
+    if ![b'"', b'\\', b'/', b'b', b'f', b'n', b'r', b't', b'u'].contains(&peek_ch) {
+        scratch.push(b'\\');
+        return Ok(());
+    }
+
     let ch = tri!(next_or_eof(read));
 
     match ch {
@@ -950,6 +959,13 @@ fn ignore_escape<'de, R>(read: &mut R) -> Result<()>
 where
     R: ?Sized + Read<'de>,
 {
+    // blaze:
+    // invalid escape case: decode the backslash char as b'\\'
+    let peek_ch = tri!(peek_or_eof(read));
+    if ![b'"', b'\\', b'/', b'b', b'f', b'n', b'r', b't', b'u'].contains(&peek_ch) {
+        return Ok(());
+    }
+
     let ch = tri!(next_or_eof(read));
 
     match ch {
