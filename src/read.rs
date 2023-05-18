@@ -791,8 +791,12 @@ static ESCAPE: [bool; 256] = {
     const __: bool = false; // allow unescaped
     [
         //   1   2   3   4   5   6   7   8   9   A   B   C   D   E   F
-        CT, CT, CT, CT, CT, CT, CT, CT, CT, CT, CT, CT, CT, CT, CT, CT, // 0
-        CT, CT, CT, CT, CT, CT, CT, CT, CT, CT, CT, CT, CT, CT, CT, CT, // 1
+        // CT, CT, CT, CT, CT, CT, CT, CT, CT, CT, CT, CT, CT, CT, CT, CT, // 0
+        // CT, CT, CT, CT, CT, CT, CT, CT, CT, CT, CT, CT, CT, CT, CT, CT, // 1
+
+        // blaze: will not escape any characters other than \0
+        CT, __, __, __, __, __, __, __, __, __, __, __, __, __, __, __, // 0
+        __, __, __, __, __, __, __, __, __, __, __, __, __, __, __, __, // 1
         __, __, QU, __, __, __, __, __, __, __, __, __, __, __, __, __, // 2
         __, __, __, __, __, __, __, __, __, __, __, __, __, __, __, __, // 3
         __, __, __, __, __, __, __, __, __, __, __, __, __, __, __, __, // 4
